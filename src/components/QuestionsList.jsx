@@ -15,8 +15,8 @@ export default function QuestionsList({ questions }) {
     return (
         <>
             <Typography variant='h5'> Created Questions </Typography>
-            {questions.map(({id, question, answer}) => (
-                <div className={classes.questionsRow} onClick={handleQuestionClick(id)}>
+            {questions.map(({ id, question, answer }) => (
+                <div key={id} className={classes.questionsRow} onClick={handleQuestionClick(id)}>
                     <Typography className={classes.questionText}> {question} </Typography>
                     <Collapse in={showAnswer[id]}>
                         <Typography className={classes.answerText}> {answer} </Typography>

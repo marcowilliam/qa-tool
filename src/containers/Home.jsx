@@ -1,12 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createQuestion } from '../store/actions/questions';
 import { makeStyles } from '@material-ui/core/styles';
 import QuestionsList from '../components/QuestionsList'
 import QuestionsForm from '../components/QuestionsForm'
 import QuestionsCounter from '../components/QuestionsCounter'
 import Typography from '@material-ui/core/Typography';
 
-const Home = ({ questions }) => {
+const Home = ({ questions, createQuestion }) => {
     const classes = useStyles();
 
     return (
@@ -21,7 +22,7 @@ const Home = ({ questions }) => {
                 <div className={classes.questionsListContainer}>
                     <QuestionsList questions={questions} />
                     <div className={classes.separator}>
-                        <QuestionsForm />
+                        <QuestionsForm createQuestion={createQuestion} />
                     </div>
                 </div>
             </div>
@@ -59,7 +60,14 @@ const mapStateToProps = (state) => ({
     questions: state.questions.data,
 })
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createQuestion: (question) => dispatch(createQuestion(question))
+    };
+}
+
 export default connect(
     mapStateToProps,
+    mapDispatchToProps
 )(Home);
 

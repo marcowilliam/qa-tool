@@ -1,11 +1,12 @@
 import React from 'react';
+import shortid from 'shortid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, ErrorMessage } from 'formik';
 
-export default function QuestionsForm() {
+export default function QuestionsForm({ createQuestion }) {
     const classes = useStyles();
 
     return (
@@ -28,7 +29,10 @@ export default function QuestionsForm() {
                 }}
                 onSubmit={(values, { setSubmitting }) => {
                     setTimeout(() => {
-                        alert(JSON.stringify(values, null, 2));
+                        createQuestion({
+                            ...values,
+                            id: shortid.generate(),
+                        });
                         setSubmitting(false);
                     }, 5000);
                 }}
