@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import QuestionsList from '../components/QuestionsList'
+import QuestionsCounter from '../components/QuestionsCounter'
 import Typography from '@material-ui/core/Typography';
 
 export default function Home(props) {
@@ -12,7 +13,10 @@ export default function Home(props) {
                 <Typography variant='h4'> The awesome Q/A tool</Typography>
             </div>
             <div className={classes.content}>
-                <div className={classes.listContainer}>
+                <div className={classes.questionsCounterContainer}>
+                    <QuestionsCounter questionsLength={2}/>
+                </div>
+                <div className={classes.questionsListContainer}>
                     <QuestionsList />
                 </div>
             </div>
@@ -32,7 +36,10 @@ const useStyles = makeStyles({
         width: '100%',
         justifyContent: 'center',
     },
-    listContainer: {
+    questionsCounterContainer: {
+        width: '15%',
+    },
+    questionsListContainer: {
         width: '40%',
         borderLeft: '1px solid',
         paddingLeft: 10,
