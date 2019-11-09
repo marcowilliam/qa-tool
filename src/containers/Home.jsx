@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import QuestionsList from '../components/QuestionsList'
+import QuestionsForm from '../components/QuestionsForm'
 import QuestionsCounter from '../components/QuestionsCounter'
 import Typography from '@material-ui/core/Typography';
 
@@ -14,10 +15,13 @@ export default function Home(props) {
             </div>
             <div className={classes.content}>
                 <div className={classes.questionsCounterContainer}>
-                    <QuestionsCounter questionsLength={2}/>
+                    <QuestionsCounter questionsLength={2} />
                 </div>
                 <div className={classes.questionsListContainer}>
                     <QuestionsList />
+                    <div className={classes.separator}>
+                        <QuestionsForm />
+                    </div>
                 </div>
             </div>
         </>
@@ -44,6 +48,9 @@ const useStyles = makeStyles({
         width: '40%',
         borderLeft: '1px solid',
         paddingLeft: 10,
+    },
+    separator: {
+        marginTop: 10,
     }
 });
 

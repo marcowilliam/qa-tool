@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 
-export default function QuestionsList(props) {
+export default function QuestionsList() {
     const classes = useStyles();
     const [showAnswer, setShowAnswer] = useState(false);
 
@@ -29,10 +29,10 @@ export default function QuestionsList(props) {
             </div>
             <Button variant="contained" color="primary" className={classes.button}>
                 Sort Questions
-                </Button>
+            </Button>
             <Button variant="contained" color="secondary" className={classes.button}>
                 Remove Questions
-                </Button>
+            </Button>
         </>
     );
 }
@@ -40,7 +40,7 @@ export default function QuestionsList(props) {
 const useStyles = makeStyles({
     questionsRow: {
         border: '1px solid #A9A9A9',
-        borderRadius: '2px',
+        borderRadius: '3px',
         marginTop: 10,
         padding: '10px 0 10px 10px',
         cursor: 'pointer'
