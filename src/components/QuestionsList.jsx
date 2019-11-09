@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 
-export default function QuestionsList() {
+export default function QuestionsList({ questions }) {
     const classes = useStyles();
     const [showAnswer, setShowAnswer] = useState(false);
 
@@ -15,18 +15,15 @@ export default function QuestionsList() {
     return (
         <>
             <Typography variant='h5'> Created Questions </Typography>
-            <div className={classes.questionsRow} onClick={handleQuestionClick(1)}>
-                <Typography className={classes.questionText}> How to add questions? </Typography>
-                <Collapse in={!showAnswer[1]}>
-                    <Typography className={classes.answerText}> Just use the form below! </Typography>
-                </Collapse>
-            </div>
-            <div className={classes.questionsRow} onClick={handleQuestionClick(2)}>
-                <Typography className={classes.questionText}> How to add questions? </Typography>
-                <Collapse in={!showAnswer[2]}>
-                    <Typography className={classes.answerText}> Just use the form below! </Typography>
-                </Collapse>
-            </div>
+            {questions.map(({id, question, answer}) => (
+                <div className={classes.questionsRow} onClick={handleQuestionClick(id)}>
+                    <Typography className={classes.questionText}> {question} </Typography>
+                    <Collapse in={!showAnswer[id]}>
+                        <Typography className={classes.answerText}> {answer} </Typography>
+                    </Collapse>
+                </div>
+            ))}
+
             <Button variant="contained" color="primary" className={classes.button}>
                 Sort Questions
             </Button>
