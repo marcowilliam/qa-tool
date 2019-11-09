@@ -16,7 +16,7 @@ const Home = ({ questions }) => {
             </div>
             <div className={classes.content}>
                 <div className={classes.questionsCounterContainer}>
-                    <QuestionsCounter questionsLength={2} />
+                    <QuestionsCounter questionsLength={questions.length} />
                 </div>
                 <div className={classes.questionsListContainer}>
                     <QuestionsList questions={questions} />

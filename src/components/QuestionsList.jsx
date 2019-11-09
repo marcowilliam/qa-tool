@@ -6,10 +6,10 @@ import Collapse from '@material-ui/core/Collapse';
 
 export default function QuestionsList({ questions }) {
     const classes = useStyles();
-    const [showAnswer, setShowAnswer] = useState(false);
+    const [showAnswer, setShowAnswer] = useState({});
 
     const handleQuestionClick = (id) => () => {
-        setShowAnswer((answersShown) => ({ ...answersShown, [id]: !answersShown[id] }));
+        setShowAnswer((answers) => ({ ...answers, [id]: !answers[id] }));
     };
 
     return (
@@ -18,7 +18,7 @@ export default function QuestionsList({ questions }) {
             {questions.map(({id, question, answer}) => (
                 <div className={classes.questionsRow} onClick={handleQuestionClick(id)}>
                     <Typography className={classes.questionText}> {question} </Typography>
-                    <Collapse in={!showAnswer[id]}>
+                    <Collapse in={showAnswer[id]}>
                         <Typography className={classes.answerText}> {answer} </Typography>
                     </Collapse>
                 </div>
