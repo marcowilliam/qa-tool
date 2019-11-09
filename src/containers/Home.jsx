@@ -38,6 +38,7 @@ const useStyles = makeStyles({
     },
     questionsCounterContainer: {
         width: '15%',
+        marginRight: 10,
     },
     questionsListContainer: {
         width: '40%',
