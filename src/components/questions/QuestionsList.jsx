@@ -3,12 +3,15 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
+import SnackbarContent from '@material-ui/core/SnackbarContent';
+import AlertDialog from '../shared/AlertDialog';
 
-export default function QuestionsList({ questions }) {
+export default function QuestionsList({ questions, setQuestions }) {
     const classes = useStyles();
     const [showAnswer, setShowAnswer] = useState({});
     const [isSortingAsc, setIsSortingAsc] = useState(undefined);
     const [questionsList, setQuestionsList] = useState(questions);
+    const [openAlertDialog, setOpenAlertDialog] = useState(false);
     const sortedQuestions = useMemo(() => [...questions].sort(({ question }, { question: previewQuestion }) => {
         return question < previewQuestion ? -1 : 1;
     }), [questions]);
@@ -37,22 +40,43 @@ export default function QuestionsList({ questions }) {
         }
     }
 
-    return (
-        <>
-            <Typography variant='h5'> Created Questions </Typography>
-            {questionsList.map(({ id, question, answer }) => (
+    const handleAlertDialogConfirm = () => {
+        setQuestions([]);
+        setOpenAlertDialog(false);
+    }
+
+    const QuestionsListMap = () => {
+        if (questionsList.length === 0) {
+            return (
+                <SnackbarContent className={classes.snackbar} message="No questions yet :-(" />
+            )
+        } else {
+            return questionsList.map(({ id, question, answer }) => (
                 <div key={id} className={classes.questionsRow} onClick={handleQuestionClick(id)}>
                     <Typography className={classes.questionText}> {question} </Typography>
                     <Collapse in={showAnswer[id]}>
                         <Typography className={classes.answerText}> {answer} </Typography>
                     </Collapse>
                 </div>
-            ))}
+            ));
+        }
+    }
 
+    return (
+        <>
+            <Typography variant='h5'> Created Questions </Typography>
+            <QuestionsListMap />
+            <AlertDialog
+                open={openAlertDialog}
+                title={'Remove'}
+                description={'Remove all questions?'}
+                handleConfirm={handleAlertDialogConfirm}
+                setOpen={setOpenAlertDialog}
+            />
             <Button variant="contained" color="primary" className={classes.button} onClick={sortQuestions}>
                 Sort Questions
             </Button>
-            <Button variant="contained" color="secondary" className={classes.button}>
+            <Button variant="contained" color="secondary" className={classes.button} onClick={() => setOpenAlertDialog(true)}>
                 Remove Questions
             </Button>
         </>
@@ -73,5 +97,10 @@ const useStyles = makeStyles({
     },
     questionText: {
         fontWeight: 'bold'
+    },
+    snackbar: {
+        marginTop: 10,
+        background: '#e50000',
+        color: 'white',
     },
 });

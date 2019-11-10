@@ -1,8 +1,7 @@
 import shortid from 'shortid';
-import { CREATE_QUESTION } from '../actions/questions';
+import { CREATE_QUESTION, SET_QUESTIONS } from '../actions/questions';
 
 const initialState = {
-    loading: false,
     data: [{
         id: shortid.generate(),
         question: 'How to add questions?',
@@ -14,13 +13,13 @@ const reducer = (state = initialState, action) => {
     switch (action.type) {
         case CREATE_QUESTION:
             return {
-                ...state,
                 data: [
                     ...state.data,
                     action.payload
                 ]
             };
-
+        case SET_QUESTIONS:
+            return { data: action.payload };
         default:
             return state;
     }

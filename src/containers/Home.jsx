@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createQuestion } from '../store/actions/questions';
+import { createQuestion, setQuestions } from '../store/actions/questions';
 import { makeStyles } from '@material-ui/core/styles';
-import QuestionsList from '../components/QuestionsList'
-import QuestionsForm from '../components/QuestionsForm'
-import QuestionsCounter from '../components/QuestionsCounter'
+import QuestionsList from '../components/questions/QuestionsList'
+import QuestionsForm from '../components/questions/QuestionsForm'
+import QuestionsCounter from '../components/questions/QuestionsCounter'
 import Typography from '@material-ui/core/Typography';
 
-const Home = ({ questions, createQuestion }) => {
+const Home = ({ questions, createQuestion, setQuestions }) => {
     const classes = useStyles();
 
     return (
@@ -20,7 +20,7 @@ const Home = ({ questions, createQuestion }) => {
                     <QuestionsCounter questionsLength={questions.length} />
                 </div>
                 <div className={classes.questionsListContainer}>
-                    <QuestionsList questions={questions} />
+                    <QuestionsList questions={questions} setQuestions={setQuestions} />
                     <div className={classes.separator}>
                         <QuestionsForm createQuestion={createQuestion} />
                     </div>
@@ -62,7 +62,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createQuestion: (question) => dispatch(createQuestion(question))
+        createQuestion: (question) => dispatch(createQuestion(question)),
+        setQuestions: (questions) => dispatch(setQuestions(questions)),
     };
 }
 
