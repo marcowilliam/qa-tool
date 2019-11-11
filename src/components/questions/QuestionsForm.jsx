@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import shortid from 'shortid';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { Formik, Form, ErrorMessage } from 'formik';
+import { Formik, ErrorMessage, Form } from 'formik';
+import Checkbox from '@material-ui/core/Checkbox';
+import LoadingButton from '../shared/LoadingButton'
 
 export default function QuestionsForm({ createQuestion }) {
     const classes = useStyles();
+    const [isDelayAdded, setIsDelayAdded] = useState(false);
+    const [isCreatingQuestion, setIsCreatingQuestion] = useState(false);
 
     return (
         <>
@@ -27,17 +30,19 @@ export default function QuestionsForm({ createQuestion }) {
                     }
                     return errors;
                 }}
-                onSubmit={(values, { setSubmitting }) => {
+                onSubmit={(values) => {
+                    setIsCreatingQuestion(true);
+                    const delayTimeInMiliseconds = isDelayAdded ? 5000 : 0;
                     setTimeout(() => {
                         createQuestion({
                             ...values,
                             id: shortid.generate(),
                         });
-                        setSubmitting(false);
-                    }, 5000);
+                        setIsCreatingQuestion(false);
+                    }, delayTimeInMiliseconds);
                 }}
             >
-                {({ isSubmitting, handleChange }) => (
+                {({ handleChange }) => (
                     <Form>
                         <div className={classes.formRow}>
                             <TextField fullWidth label="Question" type="text" name="question" onChange={handleChange} variant="outlined" />
@@ -47,9 +52,23 @@ export default function QuestionsForm({ createQuestion }) {
                             <TextField fullWidth label="Answer" type="text" name="answer" onChange={handleChange} variant="outlined" />
                             <ErrorMessage className={classes.errorMessage} name="answer" component="div" />
                         </div>
-                        <Button type="submit" variant="contained" color="primary" className={classes.button}>
+                        <LoadingButton
+                            loading={isCreatingQuestion}
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            className={classes.button}
+                        >
                             Create question
-                        </Button>
+                        </LoadingButton>
+                        <Checkbox
+                            checked={isDelayAdded}
+                            onChange={(event) => setIsDelayAdded(event.target.checked)}
+                            value="isDelayAdded"
+                            inputProps={{
+                                'aria-label': 'primary checkbox',
+                            }}
+                        />
                     </Form>
                 )}
             </Formik>
@@ -67,6 +86,7 @@ const useStyles = makeStyles({
         marginRight: 10,
         background: 'green',
         color: 'white',
+        width: '30%',
     },
     errorMessage: {
         color: '#e50000',
