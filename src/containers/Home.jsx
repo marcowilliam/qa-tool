@@ -10,6 +10,22 @@ import Typography from '@material-ui/core/Typography';
 const Home = ({ questions, createQuestion, setQuestions }) => {
     const classes = useStyles();
 
+    const handleEditQuestion = (updatedQuestion) => {
+        const updatedQuestions = questions.map((question) => {
+            return question.id === updatedQuestion.id ? updatedQuestion : question
+        });
+        setQuestions(updatedQuestions);
+    }
+
+    const handleDeleteQuestion = (questionToDelete) => {
+        if (questionToDelete) {
+            const updatedQuestions = questions.filter((question) => question.id != questionToDelete.id);
+            setQuestions(updatedQuestions);
+        } else {
+            setQuestions([]);
+        }
+    }
+
     return (
         <>
             <div className={classes.header}>
@@ -20,9 +36,13 @@ const Home = ({ questions, createQuestion, setQuestions }) => {
                     <QuestionsCounter questionsLength={questions.length} />
                 </div>
                 <div className={classes.questionsListContainer}>
-                    <QuestionsList questions={questions} setQuestions={setQuestions} />
+                    <QuestionsList 
+                        questions={questions}
+                        handleEditQuestion={handleEditQuestion} 
+                        handleDeleteQuestion={handleDeleteQuestion} 
+                    />
                     <div className={classes.separator}>
-                        <QuestionsForm createQuestion={createQuestion} />
+                        <QuestionsForm handleCreateQuestion={createQuestion} />
                     </div>
                 </div>
             </div>

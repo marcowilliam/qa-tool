@@ -6,14 +6,18 @@ import Collapse from '@material-ui/core/Collapse';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import AlertDialog from '../shared/AlertDialog';
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import EditQuestionDialog from './EditQuestionDialog';
 
-export default function QuestionsList({ questions, setQuestions }) {
+
+export default function QuestionsList({ questions, handleEditQuestion, handleDeleteQuestion }) {
     const classes = useStyles();
     const [showAnswer, setShowAnswer] = useState({});
     const [isSortingAsc, setIsSortingAsc] = useState(undefined);
     const [questionsList, setQuestionsList] = useState(questions);
     const [openAlertDialog, setOpenAlertDialog] = useState(false);
-    const [questionToDeleteId, setQuestionToDeleteId] = useState('');
+    const [questionToEdit, setQuestionToEdit] = useState(undefined);
+    const [questionToDelete, setQuestionToDelete] = useState(undefined);
     const sortedQuestions = useMemo(() => [...questions].sort(({ question }, { question: previewQuestion }) => {
         return question < previewQuestion ? -1 : 1;
     }), [questions]);
@@ -42,21 +46,25 @@ export default function QuestionsList({ questions, setQuestions }) {
         }
     }
 
+    const handleDeleteQuestionClick = (question) => () => {
+        setQuestionToDelete(question);
+        setOpenAlertDialog(true);
+    };
+
     const handleAlertDialogConfirm = () => {
-        if (questionToDeleteId) {
-            const updatedQuestions = questions.filter((question) => question.id != questionToDeleteId);
-            setQuestions(updatedQuestions);
-            setQuestionToDeleteId('');
-        } else {
-            setQuestions([]);
-        }
+        handleDeleteQuestion(questionToDelete);
+        setQuestionToDelete('');
         setOpenAlertDialog(false);
     }
 
-    const handleDeleteQuestion = (id) => () => {
-        setQuestionToDeleteId(id);
-        setOpenAlertDialog(true);
+    const handleEditQuestionClick = (question) => () => {
+        setQuestionToEdit(question);
     };
+
+    const handleEditQuestionDialogConfirm = (updatedQuestion) => {
+        handleEditQuestion(updatedQuestion);
+        setQuestionToEdit(undefined);
+    }
 
     const QuestionsListMap = () => {
         if (questionsList.length === 0) {
@@ -64,16 +72,17 @@ export default function QuestionsList({ questions, setQuestions }) {
                 <SnackbarContent className={classes.snackbar} message="No questions yet :-(" />
             )
         } else {
-            return questionsList.map(({ id, question, answer }) => (
-                <div key={id} className={classes.questionsRow}>
+            return questionsList.map((questionObject) => (
+                <div key={questionObject.id} className={classes.questionsRow}>
                     <div>
-                        <Typography className={classes.questionText} onClick={handleQuestionClick(id)}> {question} </Typography>
-                        <Collapse in={showAnswer[id]}>
-                            <Typography className={classes.answerText}> {answer} </Typography>
+                        <Typography className={classes.questionText} onClick={handleQuestionClick(questionObject.id)}> {questionObject.question} </Typography>
+                        <Collapse in={showAnswer[questionObject.id]}>
+                            <Typography className={classes.answerText}> {questionObject.answer} </Typography>
                         </Collapse>
                     </div>
                     <div>
-                        <DeleteIcon onClick={handleDeleteQuestion(id)} className={classes.deleteIcon} />
+                        <EditIcon onClick={handleEditQuestionClick(questionObject)} className={classes.questionAction} />
+                        <DeleteIcon onClick={handleDeleteQuestionClick(questionObject)} className={classes.questionAction} />
                     </div>
                 </div>
             ));
@@ -87,9 +96,14 @@ export default function QuestionsList({ questions, setQuestions }) {
             <AlertDialog
                 open={openAlertDialog}
                 title={'Remove'}
-                description={questionToDeleteId ? 'Remove question?' : 'Remove all questions?'}
+                description={questionToDelete ? 'Remove question?' : 'Remove all questions?'}
                 handleConfirm={handleAlertDialogConfirm}
                 setOpen={setOpenAlertDialog}
+            />
+            <EditQuestionDialog 
+                question={questionToEdit} 
+                setQuestion={setQuestionToEdit}
+                handleConfirm={handleEditQuestionDialogConfirm}
             />
             <Button variant="contained" color="primary" className={classes.button} onClick={sortQuestions}>
                 Sort Questions
@@ -108,7 +122,7 @@ const useStyles = makeStyles({
         border: '1px solid #A9A9A9',
         borderRadius: '3px',
         marginTop: 10,
-        padding: '10px',
+        padding: 10,
     },
     button: {
         marginTop: 10,
@@ -118,8 +132,9 @@ const useStyles = makeStyles({
         fontWeight: 'bold',
         cursor: 'pointer'
     },
-    deleteIcon: {
+    questionAction: {
         cursor: 'pointer',
+        marginLeft: 20
     },
     snackbar: {
         marginTop: 10,

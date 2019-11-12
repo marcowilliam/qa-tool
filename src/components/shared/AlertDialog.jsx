@@ -8,15 +8,11 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 const AlertDialog = ({ open, title, description, setOpen, handleConfirm }) => {
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-
     return (
         <>
             <Dialog
                 open={open}
-                onClose={handleClose}
+                onClose={() => setOpen(false)}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
@@ -27,7 +23,7 @@ const AlertDialog = ({ open, title, description, setOpen, handleConfirm }) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} color="primary">
+                    <Button onClick={() => setOpen(false)} color="primary">
                         No
                     </Button>
                     <Button onClick={handleConfirm} color="primary" autoFocus>

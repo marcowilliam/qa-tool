@@ -7,18 +7,18 @@ import { Formik, ErrorMessage, Form } from 'formik';
 import Checkbox from '@material-ui/core/Checkbox';
 import LoadingButton from '../shared/LoadingButton'
 
-export default function QuestionsForm({ createQuestion }) {
+export default function QuestionsForm({ questionObject, handleCreateQuestion, handleEditQuestion }) {
     const classes = useStyles();
     const [isDelayAdded, setIsDelayAdded] = useState(false);
     const [isCreatingQuestion, setIsCreatingQuestion] = useState(false);
 
     return (
         <>
-            <Typography variant='h5'> Create a new question </Typography>
+            <Typography variant='h5'> {`${questionObject ? 'Edit' : 'Create a new'} question`} </Typography>
             <Formik
                 initialValues={{
-                    question: '',
-                    answer: ''
+                    question: questionObject ? questionObject.question : '',
+                    answer: questionObject ? questionObject.answer : '',
                 }}
                 validate={values => {
                     const errors = {};
@@ -34,10 +34,17 @@ export default function QuestionsForm({ createQuestion }) {
                     const delayTimeInMiliseconds = isDelayAdded ? 5000 : 0;
                     setIsCreatingQuestion(true);
                     setTimeout(() => {
-                        createQuestion({
-                            ...values,
-                            id: shortid.generate(),
-                        });
+                        if (questionObject) { 
+                            handleEditQuestion({
+                                ...values,
+                                id: questionObject.id,
+                            })
+                        } else {
+                            handleCreateQuestion({
+                                ...values,
+                                id: shortid.generate(),
+                            });
+                        }
                         setIsCreatingQuestion(false);
                         resetForm();
                     }, delayTimeInMiliseconds);
@@ -47,7 +54,7 @@ export default function QuestionsForm({ createQuestion }) {
                     <Form>
                         <div className={classes.formRow}>
                             <TextField
-                                fullWidth 
+                                fullWidth
                                 value={values.question}
                                 label="Question"
                                 type="text"
@@ -76,7 +83,7 @@ export default function QuestionsForm({ createQuestion }) {
                             color="primary"
                             className={classes.button}
                         >
-                            Create question
+                            {`${questionObject ? 'Edit' : 'Create'} question`}
                         </LoadingButton>
                         <Checkbox
                             checked={isDelayAdded}
