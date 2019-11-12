@@ -6,6 +6,7 @@ import Collapse from '@material-ui/core/Collapse';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import IconButton from '@material-ui/core/IconButton';
 
 const QuestionsList = ({ questions, handleEditQuestionClick, handleDeleteQuestionClick }) => {
     const classes = useStyles();
@@ -29,8 +30,12 @@ const QuestionsList = ({ questions, handleEditQuestionClick, handleDeleteQuestio
                     </Collapse>
                 </div>
                 <div>
-                    <EditIcon onClick={() => handleEditQuestionClick(questionObject)} className={classes.questionAction} />
-                    <DeleteIcon onClick={() => handleDeleteQuestionClick(questionObject)} className={classes.questionAction} />
+                    <IconButton size="small"  onClick={() => handleEditQuestionClick(questionObject)} color="primary">
+                        <EditIcon  />
+                    </IconButton>
+                    <IconButton size="small" onClick={() => handleDeleteQuestionClick(questionObject)} color="secondary">
+                        <DeleteIcon />
+                    </IconButton>
                 </div>
             </div>
         ));
@@ -43,28 +48,25 @@ QuestionsList.propTypes = {
     handleDeleteQuestionClick: PropTypes.func.isRequired,
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     questionsRow: {
         display: 'flex',
         justifyContent: 'space-between',
+        alignItems: 'center',
         border: '1px solid #A9A9A9',
         borderRadius: '3px',
-        marginTop: 10,
-        padding: 10,
+        marginTop: theme.spacing(1),
+        padding: theme.spacing(1),
     },
     questionText: {
         fontWeight: 'bold',
         cursor: 'pointer'
     },
-    questionAction: {
-        cursor: 'pointer',
-        marginLeft: 20
-    },
     snackbar: {
-        marginTop: 10,
-        background: '#e50000',
+        marginTop: theme.spacing(1),
+        backgroundColor: 'red',
         color: 'white',
     },
-});
+}));
 
 export default QuestionsList;

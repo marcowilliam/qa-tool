@@ -94,11 +94,11 @@ QuestionsListWrapper.propTypes = {
     handleDeleteQuestion: PropTypes.func.isRequired,
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     button: {
-        marginTop: 10,
-        marginRight: 10,
+        marginTop: theme.spacing(1),
+        marginRight: theme.spacing(1),
     },
-});
+}));
 
 export default QuestionsListWrapper;

@@ -35,7 +35,7 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                     const delayTimeInMiliseconds = isDelayAdded ? 5000 : 0;
                     setIsCreatingQuestion(true);
                     setTimeout(() => {
-                        if (questionObject) { 
+                        if (questionObject) {
                             handleEditQuestion({
                                 ...values,
                                 id: questionObject.id,
@@ -52,7 +52,7 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                 }}
             >
                 {({ handleChange, values }) => (
-                    <Form>
+                    <Form className={classes.form}>
                         <div className={classes.formRow}>
                             <TextField
                                 fullWidth
@@ -77,23 +77,20 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                             />
                             <ErrorMessage className={classes.errorMessage} name="answer" component="div" />
                         </div>
-                        <LoadingButton
-                            isLoading={isCreatingQuestion}
-                            type="submit"
-                            variant="contained"
-                            color="primary"
-                            className={classes.button}
-                        >
-                            {`${questionObject ? 'Edit' : 'Create'} question`}
-                        </LoadingButton>
                         <Checkbox
                             checked={isDelayAdded}
                             onChange={(event) => setIsDelayAdded(event.target.checked)}
                             value="isDelayAdded"
-                            inputProps={{
-                                'aria-label': 'primary checkbox',
-                            }}
                         />
+                        <LoadingButton
+                            isLoading={isCreatingQuestion}
+                            type="submit"
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                        >
+                            {`${questionObject ? 'Edit' : 'Create'} question`}
+                        </LoadingButton>
                     </Form>
                 )}
             </Formik>
@@ -103,26 +100,28 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
 
 QuestionsForm.propTypes = {
     questionObject: PropTypes.object,
-    handleCreateQuestion: PropTypes.func, 
-    handleEditQuestion: PropTypes.func, 
+    handleCreateQuestion: PropTypes.func,
+    handleEditQuestion: PropTypes.func,
 }
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+    form: {
+        marginTop: theme.spacing(2),
+        marginBottom: theme.spacing(2),
+    },
     formRow: {
-        marginTop: 10,
-        height: '10%'
+        marginTop: theme.spacing(1),
     },
     button: {
-        marginTop: 10,
-        marginRight: 10,
-        background: 'green',
-        color: 'white',
-        width: '30%',
+        marginTop: theme.spacing(1),
+        marginRight: theme.spacing(1),
+        width: '100%',
     },
     errorMessage: {
+        margin: theme.spacing(0.5),
         color: '#e50000',
         fontSize: 10,
     }
-});
+}));
 
 export default QuestionsForm;
