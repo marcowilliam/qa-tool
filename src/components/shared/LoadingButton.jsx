@@ -7,7 +7,7 @@ const LoadingButton = ({ isLoading, children, ...rest }) => {
     return (
         <Button {...rest} >
             {isLoading ?
-                <CircularProgress size={20} />
+                <CircularProgress color='inherit' size={20} />
                 :
                 children
             }

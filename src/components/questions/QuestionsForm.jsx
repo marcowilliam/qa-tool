@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import LoadingButton from '../shared/LoadingButton';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
 
 const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestion }) => {
     const classes = useStyles();
@@ -86,8 +88,11 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                             isLoading={isCreatingQuestion}
                             type="submit"
                             variant="contained"
-                            color="secondary"
+                            color="primary"
+                            disableFocusRipple={true}
+                            disableRipple={true}
                             className={classes.button}
+                            fullWidth={true}
                         >
                             {`${questionObject ? 'Edit' : 'Create'} question`}
                         </LoadingButton>
@@ -115,11 +120,16 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: theme.spacing(1),
         marginRight: theme.spacing(1),
-        width: '100%',
+        color: 'white',
+        backgroundColor: green[600],
+        '&:hover': {
+            textDecoration: 'none',
+            backgroundColor: green[800],
+          },
     },
     errorMessage: {
         margin: theme.spacing(0.5),
-        color: '#e50000',
+        color: red[500],
         fontSize: 10,
     }
 }));

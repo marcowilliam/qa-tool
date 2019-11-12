@@ -11,8 +11,12 @@ import { blue, red } from '@material-ui/core/colors';
 
 const theme = {
     palette: {
-        primary: blue,
-        secondary: red,
+        primary: {
+            main: blue[700]
+        },
+        secondary: {
+            main: red[700],
+        }
     },
 }
 

@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     },
     snackbar: {
         marginTop: theme.spacing(1),
-        backgroundColor: 'red',
+        backgroundColor: theme.palette.secondary.main,
         color: 'white',
     },
 }));

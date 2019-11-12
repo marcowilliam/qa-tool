@@ -9,7 +9,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogCloseButton from './DialogCloseButton'
 
-const AlertDialog = ({ open, title, description, setOpen, handleConfirm }) => {
+const AlertDialog = ({ open, title, description, handleClose, handleConfirm }) => {
     const classes = useStyles();
 
     return (
@@ -18,11 +18,11 @@ const AlertDialog = ({ open, title, description, setOpen, handleConfirm }) => {
                 fullWidth={true}
                 maxWidth={'xs'}
                 open={open}
-                onClose={() => setOpen(false)}
+                onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogCloseButton handleClose={() => setOpen(false)}/>
+                <DialogCloseButton handleClose={handleClose}/>
                 <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
@@ -43,7 +43,7 @@ AlertDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    setOpen: PropTypes.func.isRequired,
+    handleClose: PropTypes.func.isRequired,
     handleConfirm: PropTypes.func.isRequired,
 }
 

@@ -49,6 +49,11 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
         setOpenAlertDialog(false);
     }
 
+    const handleAlertDialogClose = () => {
+        setQuestionToDelete('');
+        setOpenAlertDialog(false);
+    }
+
     const handleEditQuestionClick = (question) => {
         setQuestionToEdit(question);
     };
@@ -61,7 +66,7 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
     return (
         <>
             <Typography variant='h5'> Created Questions </Typography>
-            <QuestionsList 
+            <QuestionsList
                 questions={questionsList}
                 handleEditQuestionClick={handleEditQuestionClick}
                 handleDeleteQuestionClick={handleDeleteQuestionClick}
@@ -71,19 +76,23 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
                 title={'Remove'}
                 description={questionToDelete ? 'Remove question?' : 'Remove all questions?'}
                 handleConfirm={handleAlertDialogConfirm}
-                setOpen={setOpenAlertDialog}
+                handleClose={handleAlertDialogClose}
             />
-            <EditQuestionDialog 
-                question={questionToEdit} 
+            <EditQuestionDialog
+                question={questionToEdit}
                 setQuestion={setQuestionToEdit}
                 handleConfirm={handleEditQuestionDialogConfirm}
             />
-            <Button variant="contained" color="primary" className={classes.button} onClick={handleSortQuestions}>
-                Sort Questions
-            </Button>
-            <Button variant="contained" color="secondary" className={classes.button} onClick={() => setOpenAlertDialog(true)}>
-                Remove Questions
-            </Button>
+            {questionsList.length > 0 &&
+                <div>
+                    <Button variant="contained" color="primary" className={classes.button} onClick={handleSortQuestions}>
+                        Sort Questions
+                    </Button>
+                    <Button variant="contained" color="secondary" className={classes.button} onClick={() => setOpenAlertDialog(true)}>
+                        Remove Questions
+                    </Button>
+                </div>
+            }
         </>
     );
 }
@@ -98,6 +107,9 @@ const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: theme.spacing(1),
         marginRight: theme.spacing(1),
+        [theme.breakpoints.only('xs')]: {
+            fontSize: '85%'
+        },
     },
 }));
 
