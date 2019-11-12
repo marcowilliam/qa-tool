@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AlertDialog from '../shared/AlertDialog';
 import EditQuestionDialog from './EditQuestionDialog';
 import QuestionsList from './QuestionsList';
-
 
 const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuestion }) => {
     const classes = useStyles();
@@ -19,7 +19,7 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
     }), [questions]);
 
     useEffect(() => {
-        if (isSortingAsc == undefined) {
+        if (isSortingAsc === undefined) {
             setQuestionsList(questions);
         } else if (isSortingAsc) {
             setQuestionsList(sortedQuestions);
@@ -29,7 +29,7 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
     }, [questions])
 
     const handleSortQuestions = () => {
-        if (isSortingAsc == undefined) {
+        if (isSortingAsc === undefined) {
             setQuestionsList(sortedQuestions);
             setIsSortingAsc(true);
         } else {
@@ -86,6 +86,12 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
             </Button>
         </>
     );
+}
+
+QuestionsListWrapper.propTypes = {
+    questions: PropTypes.array.isRequired,
+    handleEditQuestion: PropTypes.func.isRequired,
+    handleDeleteQuestion: PropTypes.func.isRequired,
 }
 
 const useStyles = makeStyles({

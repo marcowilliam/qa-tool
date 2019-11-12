@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createQuestion, setQuestions } from '../store/actions/questions';
 import { makeStyles } from '@material-ui/core/styles';
@@ -19,7 +20,7 @@ const Home = ({ questions, createQuestion, setQuestions }) => {
 
     const handleDeleteQuestion = (questionToDelete) => {
         if (questionToDelete) {
-            const updatedQuestions = questions.filter((question) => question.id != questionToDelete.id);
+            const updatedQuestions = questions.filter((question) => question.id !== questionToDelete.id);
             setQuestions(updatedQuestions);
         } else {
             setQuestions([]);
@@ -75,6 +76,12 @@ const useStyles = makeStyles({
         marginTop: 10,
     }
 });
+
+Home.propTypes = {
+    questions: PropTypes.array.isRequired, 
+    createQuestion: PropTypes.func.isRequired, 
+    setQuestions: PropTypes.func.isRequired,
+}
 
 const mapStateToProps = (state) => ({
     questions: state.questions.data,

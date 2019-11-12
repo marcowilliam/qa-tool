@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import shortid from 'shortid';
+import PropTypes from 'prop-types';
+import { Formik, ErrorMessage, Form } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import { Formik, ErrorMessage, Form } from 'formik';
 import Checkbox from '@material-ui/core/Checkbox';
-import LoadingButton from '../shared/LoadingButton'
+import LoadingButton from '../shared/LoadingButton';
 
-export default function QuestionsForm({ questionObject, handleCreateQuestion, handleEditQuestion }) {
+const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestion }) => {
     const classes = useStyles();
     const [isDelayAdded, setIsDelayAdded] = useState(false);
     const [isCreatingQuestion, setIsCreatingQuestion] = useState(false);
@@ -77,7 +78,7 @@ export default function QuestionsForm({ questionObject, handleCreateQuestion, ha
                             <ErrorMessage className={classes.errorMessage} name="answer" component="div" />
                         </div>
                         <LoadingButton
-                            loading={isCreatingQuestion}
+                            isLoading={isCreatingQuestion}
                             type="submit"
                             variant="contained"
                             color="primary"
@@ -100,6 +101,12 @@ export default function QuestionsForm({ questionObject, handleCreateQuestion, ha
     );
 }
 
+QuestionsForm.propTypes = {
+    questionObject: PropTypes.object,
+    handleCreateQuestion: PropTypes.func, 
+    handleEditQuestion: PropTypes.func, 
+}
+
 const useStyles = makeStyles({
     formRow: {
         marginTop: 10,
@@ -117,3 +124,5 @@ const useStyles = makeStyles({
         fontSize: 10,
     }
 });
+
+export default QuestionsForm;

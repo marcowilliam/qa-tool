@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
@@ -34,6 +35,12 @@ const QuestionsList = ({ questions, handleEditQuestionClick, handleDeleteQuestio
             </div>
         ));
     }
+}
+
+QuestionsList.propTypes = {
+    questions: PropTypes.array.isRequired,
+    handleEditQuestionClick: PropTypes.func.isRequired,
+    handleDeleteQuestionClick: PropTypes.func.isRequired,
 }
 
 const useStyles = makeStyles({
