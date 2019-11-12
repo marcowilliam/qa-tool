@@ -13,7 +13,7 @@ import green from '@material-ui/core/colors/green';
 const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestion }) => {
     const classes = useStyles();
     const [isDelayAdded, setIsDelayAdded] = useState(false);
-    const [isCreatingQuestion, setIsCreatingQuestion] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     return (
         <>
@@ -35,7 +35,7 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                 }}
                 onSubmit={(values, { resetForm }) => {
                     const delayTimeInMiliseconds = isDelayAdded ? 5000 : 0;
-                    setIsCreatingQuestion(true);
+                    setIsLoading(true);
                     setTimeout(() => {
                         if (questionObject) {
                             handleEditQuestion({
@@ -48,7 +48,7 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                                 id: shortid.generate(),
                             });
                         }
-                        setIsCreatingQuestion(false);
+                        setIsLoading(false);
                         resetForm();
                     }, delayTimeInMiliseconds);
                 }}
@@ -85,12 +85,10 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                             value="isDelayAdded"
                         />
                         <LoadingButton
-                            isLoading={isCreatingQuestion}
+                            isLoading={isLoading}
                             type="submit"
                             variant="contained"
                             color="primary"
-                            disableFocusRipple={true}
-                            disableRipple={true}
                             className={classes.button}
                             fullWidth={true}
                         >

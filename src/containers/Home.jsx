@@ -31,18 +31,13 @@ const Home = ({ questions, createQuestion, setQuestions }) => {
 
     return (
         <Container maxWidth='md'>
-            {/* <> */}
             <div className={classes.header}>
                 <Typography variant='h4'> The awesome Q/A tool</Typography>
             </div>
-            <Grid container spacing={3} className={classes.gridContainer}>
-                {/* <div className={classes.content}> */}
-                {/* <div className={classes.questionsCounterContainer}> */}
+            <Grid container spacing={3}>
                 <Grid item md={3} xs={12}>
                     <QuestionsCounter questionsLength={questions.length} />
                 </Grid>
-                {/* </div> */}
-                {/* <div className={classes.questionsListContainer}> */}
                 <Grid item md={9} xs={12} className={classes.questionsListGrid}>
                     <QuestionsListWrapper
                         questions={questions}
@@ -53,10 +48,7 @@ const Home = ({ questions, createQuestion, setQuestions }) => {
                         <QuestionsForm handleCreateQuestion={createQuestion} />
                     </div>
                 </Grid>
-                {/* </div> */}
-                {/* </div> */}
             </Grid>
-            {/* </> */}
         </Container>
     );
 };
@@ -71,28 +63,13 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         textAlign: 'center',
     },
-    // content: {
-    //     marginTop: theme.spacing(4),
-    //     display: 'flex',
-    //     width: '100%',
-    //     justifyContent: 'center',
-    // },
-    // questionsCounterContainer: {
-    //     width: '15%',
-    //     marginRight: theme.spacing(2),
-    // },
-    gridContainer: {
-        // background: 'red'
-    },
     questionsListGrid: {
-        // width: '100%',
         [theme.breakpoints.up('md')]: {
         borderLeft: '1px solid',
         },
         [theme.breakpoints.down('sm')]: {
             borderTop: '1px solid',
         },
-        // paddingLeft: theme.spacing(1),
     },
     separator: {
         marginTop: theme.spacing(3),

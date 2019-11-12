@@ -6,7 +6,7 @@ const QuestionsCounter = ({ questionsLength }) => {
     return (
         <>
             <Typography>
-                Here you find {questionsLength || 'no'} question. Feel free to create your own questions
+                Here you find {questionsLength || 'no'} questions. Feel free to create your own questions!
             </Typography>
         </>
     );
