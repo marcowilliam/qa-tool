@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createQuestion, setQuestions } from '../store/actions/questions';
 import { makeStyles } from '@material-ui/core/styles';
-import QuestionsList from '../components/questions/QuestionsList'
+import QuestionsListWrapper from '../components/questions/QuestionsListWrapper'
 import QuestionsForm from '../components/questions/QuestionsForm'
 import QuestionsCounter from '../components/questions/QuestionsCounter'
 import Typography from '@material-ui/core/Typography';
@@ -36,7 +36,7 @@ const Home = ({ questions, createQuestion, setQuestions }) => {
                     <QuestionsCounter questionsLength={questions.length} />
                 </div>
                 <div className={classes.questionsListContainer}>
-                    <QuestionsList 
+                    <QuestionsListWrapper 
                         questions={questions}
                         handleEditQuestion={handleEditQuestion} 
                         handleDeleteQuestion={handleDeleteQuestion} 
