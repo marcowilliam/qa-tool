@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Collapse from '@material-ui/core/Collapse';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import AlertDialog from '../shared/AlertDialog';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 export default function QuestionsList({ questions, setQuestions }) {
     const classes = useStyles();
@@ -12,6 +13,7 @@ export default function QuestionsList({ questions, setQuestions }) {
     const [isSortingAsc, setIsSortingAsc] = useState(undefined);
     const [questionsList, setQuestionsList] = useState(questions);
     const [openAlertDialog, setOpenAlertDialog] = useState(false);
+    const [questionToDeleteId, setQuestionToDeleteId] = useState('');
     const sortedQuestions = useMemo(() => [...questions].sort(({ question }, { question: previewQuestion }) => {
         return question < previewQuestion ? -1 : 1;
     }), [questions]);
@@ -41,9 +43,20 @@ export default function QuestionsList({ questions, setQuestions }) {
     }
 
     const handleAlertDialogConfirm = () => {
-        setQuestions([]);
+        if (questionToDeleteId) {
+            const updatedQuestions = questions.filter((question) => question.id != questionToDeleteId);
+            setQuestions(updatedQuestions);
+            setQuestionToDeleteId('');
+        } else {
+            setQuestions([]);
+        }
         setOpenAlertDialog(false);
     }
+
+    const handleDeleteQuestion = (id) => () => {
+        setQuestionToDeleteId(id);
+        setOpenAlertDialog(true);
+    };
 
     const QuestionsListMap = () => {
         if (questionsList.length === 0) {
@@ -52,11 +65,16 @@ export default function QuestionsList({ questions, setQuestions }) {
             )
         } else {
             return questionsList.map(({ id, question, answer }) => (
-                <div key={id} className={classes.questionsRow} onClick={handleQuestionClick(id)}>
-                    <Typography className={classes.questionText}> {question} </Typography>
-                    <Collapse in={showAnswer[id]}>
-                        <Typography className={classes.answerText}> {answer} </Typography>
-                    </Collapse>
+                <div key={id} className={classes.questionsRow}>
+                    <div>
+                        <Typography className={classes.questionText} onClick={handleQuestionClick(id)}> {question} </Typography>
+                        <Collapse in={showAnswer[id]}>
+                            <Typography className={classes.answerText}> {answer} </Typography>
+                        </Collapse>
+                    </div>
+                    <div>
+                        <DeleteIcon onClick={handleDeleteQuestion(id)} className={classes.deleteIcon} />
+                    </div>
                 </div>
             ));
         }
@@ -69,7 +87,7 @@ export default function QuestionsList({ questions, setQuestions }) {
             <AlertDialog
                 open={openAlertDialog}
                 title={'Remove'}
-                description={'Remove all questions?'}
+                description={questionToDeleteId ? 'Remove question?' : 'Remove all questions?'}
                 handleConfirm={handleAlertDialogConfirm}
                 setOpen={setOpenAlertDialog}
             />
@@ -85,18 +103,23 @@ export default function QuestionsList({ questions, setQuestions }) {
 
 const useStyles = makeStyles({
     questionsRow: {
+        display: 'flex',
+        justifyContent: 'space-between',
         border: '1px solid #A9A9A9',
         borderRadius: '3px',
         marginTop: 10,
-        padding: '10px 0 10px 10px',
-        cursor: 'pointer'
+        padding: '10px',
     },
     button: {
         marginTop: 10,
         marginRight: 10,
     },
     questionText: {
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        cursor: 'pointer'
+    },
+    deleteIcon: {
+        cursor: 'pointer',
     },
     snackbar: {
         marginTop: 10,

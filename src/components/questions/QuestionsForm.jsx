@@ -30,26 +30,43 @@ export default function QuestionsForm({ createQuestion }) {
                     }
                     return errors;
                 }}
-                onSubmit={(values) => {
-                    setIsCreatingQuestion(true);
+                onSubmit={(values, { resetForm }) => {
                     const delayTimeInMiliseconds = isDelayAdded ? 5000 : 0;
+                    setIsCreatingQuestion(true);
                     setTimeout(() => {
                         createQuestion({
                             ...values,
                             id: shortid.generate(),
                         });
                         setIsCreatingQuestion(false);
+                        resetForm();
                     }, delayTimeInMiliseconds);
                 }}
             >
-                {({ handleChange }) => (
+                {({ handleChange, values }) => (
                     <Form>
                         <div className={classes.formRow}>
-                            <TextField fullWidth label="Question" type="text" name="question" onChange={handleChange} variant="outlined" />
+                            <TextField
+                                fullWidth 
+                                value={values.question}
+                                label="Question"
+                                type="text"
+                                name="question"
+                                onChange={handleChange}
+                                variant="outlined"
+                            />
                             <ErrorMessage className={classes.errorMessage} name="question" component="div" />
                         </div>
                         <div className={classes.formRow}>
-                            <TextField fullWidth label="Answer" type="text" name="answer" onChange={handleChange} variant="outlined" />
+                            <TextField
+                                fullWidth
+                                value={values.answer}
+                                label="Answer"
+                                type="text"
+                                name="answer"
+                                onChange={handleChange}
+                                variant="outlined"
+                            />
                             <ErrorMessage className={classes.errorMessage} name="answer" component="div" />
                         </div>
                         <LoadingButton
