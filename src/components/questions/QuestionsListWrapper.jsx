@@ -14,9 +14,10 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
     const [openAlertDialog, setOpenAlertDialog] = useState(false);
     const [questionToEdit, setQuestionToEdit] = useState(undefined);
     const [questionToDelete, setQuestionToDelete] = useState(undefined);
-    const sortedQuestions = useMemo(() => [...questions].sort(({ question }, { question: previewQuestion }) => {
-        return question < previewQuestion ? -1 : 1;
-    }), [questions]);
+    const sortedQuestions = useMemo(
+        () => [...questions].sort(({ question }, { question: previewQuestion }) => {
+            return question < previewQuestion ? -1 : 1;
+        }), [questions]);
 
     useEffect(() => {
         if (isSortingAsc === undefined) {
@@ -26,7 +27,7 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
         } else {
             setQuestionsList([...sortedQuestions].reverse());
         }
-    }, [questions])
+    }, [questions]);
 
     const handleSortQuestions = () => {
         if (isSortingAsc === undefined) {
@@ -36,7 +37,7 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
             setQuestionsList([...questionsList].reverse());
             setIsSortingAsc(!isSortingAsc);
         }
-    }
+    };
 
     const handleDeleteQuestionClick = (question) => {
         setQuestionToDelete(question);
@@ -47,12 +48,12 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
         handleDeleteQuestion(questionToDelete);
         setQuestionToDelete('');
         setOpenAlertDialog(false);
-    }
+    };
 
     const handleAlertDialogClose = () => {
         setQuestionToDelete('');
         setOpenAlertDialog(false);
-    }
+    };
 
     const handleEditQuestionClick = (question) => {
         setQuestionToEdit(question);
@@ -61,7 +62,7 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
     const handleEditQuestionDialogConfirm = (updatedQuestion) => {
         handleEditQuestion(updatedQuestion);
         setQuestionToEdit(undefined);
-    }
+    };
 
     return (
         <>
@@ -85,30 +86,40 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
             />
             {questionsList.length > 0 &&
                 <div>
-                    <Button variant="contained" color="primary" className={classes.button} onClick={handleSortQuestions}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                        onClick={handleSortQuestions}
+                    >
                         Sort Questions
                     </Button>
-                    <Button variant="contained" color="secondary" className={classes.button} onClick={() => setOpenAlertDialog(true)}>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.button}
+                        onClick={() => setOpenAlertDialog(true)}
+                    >
                         Remove Questions
                     </Button>
                 </div>
             }
         </>
     );
-}
+};
 
 QuestionsListWrapper.propTypes = {
     questions: PropTypes.array.isRequired,
     handleEditQuestion: PropTypes.func.isRequired,
     handleDeleteQuestion: PropTypes.func.isRequired,
-}
+};
 
 const useStyles = makeStyles((theme) => ({
     button: {
         marginTop: theme.spacing(1),
         marginRight: theme.spacing(1),
         [theme.breakpoints.only('xs')]: {
-            fontSize: '85%'
+            fontSize: '85%',
         },
     },
 }));

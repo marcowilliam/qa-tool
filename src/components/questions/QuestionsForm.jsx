@@ -17,7 +17,9 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
 
     return (
         <>
-            <Typography variant='h5'> {`${questionObject ? 'Edit' : 'Create a new'} question`} </Typography>
+            <Typography variant='h5'>
+                {`${questionObject ? 'Edit' : 'Create a new'} question`}
+            </Typography>
             <Formik
                 initialValues={{
                     question: questionObject ? questionObject.question : '',
@@ -41,7 +43,7 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                             handleEditQuestion({
                                 ...values,
                                 id: questionObject.id,
-                            })
+                            });
                         } else {
                             handleCreateQuestion({
                                 ...values,
@@ -65,7 +67,11 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                                 onChange={handleChange}
                                 variant="outlined"
                             />
-                            <ErrorMessage className={classes.errorMessage} name="question" component="div" />
+                            <ErrorMessage
+                                className={classes.errorMessage}
+                                name="question"
+                                component="div"
+                            />
                         </div>
                         <div className={classes.formRow}>
                             <TextField
@@ -77,7 +83,11 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                                 onChange={handleChange}
                                 variant="outlined"
                             />
-                            <ErrorMessage className={classes.errorMessage} name="answer" component="div" />
+                            <ErrorMessage
+                                className={classes.errorMessage}
+                                name="answer"
+                                component="div"
+                            />
                         </div>
                         <Checkbox
                             checked={isDelayAdded}
@@ -99,13 +109,13 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
             </Formik>
         </>
     );
-}
+};
 
 QuestionsForm.propTypes = {
     questionObject: PropTypes.object,
     handleCreateQuestion: PropTypes.func,
     handleEditQuestion: PropTypes.func,
-}
+};
 
 const useStyles = makeStyles((theme) => ({
     form: {
@@ -123,13 +133,13 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             textDecoration: 'none',
             backgroundColor: green[800],
-          },
+        },
     },
     errorMessage: {
         margin: theme.spacing(0.5),
         color: red[500],
         fontSize: 10,
-    }
+    },
 }));
 
 export default QuestionsForm;

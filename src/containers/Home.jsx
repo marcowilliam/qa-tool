@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createQuestion, setQuestions } from '../store/actions/questions';
 import { makeStyles } from '@material-ui/core/styles';
-import QuestionsListWrapper from '../components/questions/QuestionsListWrapper'
-import QuestionsForm from '../components/questions/QuestionsForm'
-import QuestionsCounter from '../components/questions/QuestionsCounter'
+import QuestionsListWrapper from '../components/questions/QuestionsListWrapper';
+import QuestionsForm from '../components/questions/QuestionsForm';
+import QuestionsCounter from '../components/questions/QuestionsCounter';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -15,10 +15,10 @@ const Home = ({ questions, createQuestion, setQuestions }) => {
 
     const handleEditQuestion = (updatedQuestion) => {
         const updatedQuestions = questions.map((question) => {
-            return question.id === updatedQuestion.id ? updatedQuestion : question
+            return question.id === updatedQuestion.id ? updatedQuestion : question;
         });
         setQuestions(updatedQuestions);
-    }
+    };
 
     const handleDeleteQuestion = (questionToDelete) => {
         if (questionToDelete) {
@@ -27,7 +27,7 @@ const Home = ({ questions, createQuestion, setQuestions }) => {
         } else {
             setQuestions([]);
         }
-    }
+    };
 
     return (
         <Container maxWidth='md'>
@@ -54,9 +54,6 @@ const Home = ({ questions, createQuestion, setQuestions }) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        flexGrow: 1,
-    },
     header: {
         marginTop: theme.spacing(4),
         marginBottom: theme.spacing(4),
@@ -65,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
     questionsListGrid: {
         [theme.breakpoints.up('md')]: {
-        borderLeft: '1px solid',
+            borderLeft: '1px solid',
         },
         [theme.breakpoints.down('sm')]: {
             borderTop: '1px solid',
@@ -73,25 +70,25 @@ const useStyles = makeStyles((theme) => ({
     },
     separator: {
         marginTop: theme.spacing(3),
-    }
+    },
 }));
 
 Home.propTypes = {
     questions: PropTypes.array.isRequired,
     createQuestion: PropTypes.func.isRequired,
     setQuestions: PropTypes.func.isRequired,
-}
+};
 
 const mapStateToProps = (state) => ({
     questions: state.questions.data,
-})
+});
 
 const mapDispatchToProps = (dispatch) => {
     return {
         createQuestion: (question) => dispatch(createQuestion(question)),
         setQuestions: (questions) => dispatch(setQuestions(questions)),
     };
-}
+};
 
 export default connect(
     mapStateToProps,

@@ -8,6 +8,6 @@ const initialData = {
             answer: 'Just use the form below!',
         },
     ],
-}
+};
 
 export default initialData;

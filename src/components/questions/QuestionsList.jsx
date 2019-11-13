@@ -15,38 +15,53 @@ const QuestionsList = ({ questions, handleEditQuestionClick, handleDeleteQuestio
     const handleQuestionClick = (id) => () => {
         setShowAnswer((answers) => ({ ...answers, [id]: !answers[id] }));
     };
-    
+
     if (questions.length === 0) {
         return (
             <SnackbarContent className={classes.snackbar} message="No questions yet :-(" />
-        )
+        );
     } else {
         return questions.map((questionObject) => (
             <div key={questionObject.id} className={classes.questionsRow}>
                 <div>
-                    <Typography className={classes.questionText} onClick={handleQuestionClick(questionObject.id)}> {questionObject.question} </Typography>
+                    <Typography
+                        className={classes.questionText}
+                        onClick={handleQuestionClick(questionObject.id)}
+                    >
+                        {questionObject.question}
+                    </Typography>
                     <Collapse in={showAnswer[questionObject.id]}>
-                        <Typography className={classes.answerText}> {questionObject.answer} </Typography>
+                        <Typography> 
+                            {questionObject.answer} 
+                        </Typography>
                     </Collapse>
                 </div>
                 <div>
-                    <IconButton size="small"  onClick={() => handleEditQuestionClick(questionObject)} color="primary">
-                        <EditIcon  />
+                    <IconButton
+                        size="small"
+                        onClick={() => handleEditQuestionClick(questionObject)}
+                        color="primary"
+                    >
+                        <EditIcon />
                     </IconButton>
-                    <IconButton size="small" onClick={() => handleDeleteQuestionClick(questionObject)} color="secondary">
+                    <IconButton
+                        size="small"
+                        onClick={() => handleDeleteQuestionClick(questionObject)}
+                        color="secondary"
+                    >
                         <DeleteIcon />
                     </IconButton>
                 </div>
             </div>
         ));
     }
-}
+};
 
 QuestionsList.propTypes = {
     questions: PropTypes.array.isRequired,
     handleEditQuestionClick: PropTypes.func.isRequired,
     handleDeleteQuestionClick: PropTypes.func.isRequired,
-}
+};
 
 const useStyles = makeStyles((theme) => ({
     questionsRow: {
@@ -60,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     },
     questionText: {
         fontWeight: 'bold',
-        cursor: 'pointer'
+        cursor: 'pointer',
     },
     snackbar: {
         marginTop: theme.spacing(1),

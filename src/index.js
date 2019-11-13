@@ -12,13 +12,13 @@ import { blue, red } from '@material-ui/core/colors';
 const theme = {
     palette: {
         primary: {
-            main: blue[700]
+            main: blue[700],
         },
         secondary: {
             main: red[700],
-        }
+        },
     },
-}
+};
 
 let muiTheme = createMuiTheme(theme);
 muiTheme = responsiveFontSizes(muiTheme);

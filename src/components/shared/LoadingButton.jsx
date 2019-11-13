@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const LoadingButton = ({ isLoading, children, ...rest }) => {
     return (
@@ -12,12 +12,12 @@ const LoadingButton = ({ isLoading, children, ...rest }) => {
                 children
             }
         </Button>
-    )
-}
+    );
+};
 
 LoadingButton.propTypes = {
     isLoading: PropTypes.bool.isRequired,
-    children: PropTypes.string.isRequired
-}
+    children: PropTypes.string.isRequired,
+};
 
 export default LoadingButton;

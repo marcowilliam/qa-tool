@@ -13,19 +13,19 @@ const DialogCloseButton = ({ handleClose }) => {
                 <CloseIcon />
             </IconButton>
         </div>
-    )
-}
+    );
+};
 
 const useStyles = makeStyles((theme) => ({
     closeButton: {
         marginLeft: 'auto',
         paddingRight: theme.spacing(1),
         marginTop: theme.spacing(1),
-    }
+    },
 }));
 
 DialogCloseButton.propTypes = {
     handleClose: PropTypes.func.isRequired,
-}
+};
 
 export default DialogCloseButton;
