@@ -6,20 +6,25 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
-import LoadingButton from '../shared/LoadingButton';
 import red from '@material-ui/core/colors/red';
 import green from '@material-ui/core/colors/green';
+import LoadingButton from '../shared/LoadingButton';
+import Tooltip from '../shared/Tooltip';
 
 const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestion }) => {
     const classes = useStyles();
     const [isDelayAdded, setIsDelayAdded] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const title = `${questionObject ? 'Edit' : 'Create a new'} question`;
+    const titleToolTip = `Here you can ${questionObject ? 'edit' : 'create new'} questions and their answers.`;
 
     return (
         <>
-            <Typography variant='h5'>
-                {`${questionObject ? 'Edit' : 'Create a new'} question`}
-            </Typography>
+            <Tooltip text={titleToolTip}>
+                <Typography variant='h5'>
+                    {title}
+                </Typography>
+            </Tooltip>
             <Formik
                 initialValues={{
                     question: questionObject ? questionObject.question : '',
@@ -36,7 +41,7 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                     return errors;
                 }}
                 onSubmit={(values, { resetForm }) => {
-                    const delayTimeInMiliseconds = isDelayAdded ? 5000 : 0;
+                    const delayTimeInMilliseconds = isDelayAdded ? 5000 : 0;
                     setIsLoading(true);
                     setTimeout(() => {
                         if (questionObject) {
@@ -52,7 +57,7 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                         }
                         setIsLoading(false);
                         resetForm();
-                    }, delayTimeInMiliseconds);
+                    }, delayTimeInMilliseconds);
                 }}
             >
                 {({ handleChange, values }) => (
@@ -67,12 +72,12 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                                 onChange={handleChange}
                                 variant="outlined"
                             />
-                            <ErrorMessage
-                                className={classes.errorMessage}
-                                name="question"
-                                component="div"
-                            />
                         </div>
+                        <ErrorMessage
+                            className={classes.errorMessage}
+                            name="question"
+                            component="div"
+                        />
                         <div className={classes.formRow}>
                             <TextField
                                 fullWidth
@@ -83,12 +88,12 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                                 onChange={handleChange}
                                 variant="outlined"
                             />
-                            <ErrorMessage
-                                className={classes.errorMessage}
-                                name="answer"
-                                component="div"
-                            />
                         </div>
+                        <ErrorMessage
+                            className={classes.errorMessage}
+                            name="answer"
+                            component="div"
+                        />
                         <div className={classes.formRow}>
                             <Checkbox
                                 checked={isDelayAdded}

@@ -53,6 +53,12 @@ const Home = ({ questions, createQuestion, setQuestions }) => {
     );
 };
 
+Home.propTypes = {
+    questions: PropTypes.array.isRequired,
+    createQuestion: PropTypes.func.isRequired,
+    setQuestions: PropTypes.func.isRequired,
+};
+
 const useStyles = makeStyles((theme) => ({
     header: {
         marginTop: theme.spacing(4),
@@ -72,12 +78,6 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
     },
 }));
-
-Home.propTypes = {
-    questions: PropTypes.array.isRequired,
-    createQuestion: PropTypes.func.isRequired,
-    setQuestions: PropTypes.func.isRequired,
-};
 
 const mapStateToProps = (state) => ({
     questions: state.questions.data,

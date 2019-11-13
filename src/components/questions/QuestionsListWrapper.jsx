@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AlertDialog from '../shared/AlertDialog';
+import Tooltip from '../shared/Tooltip';
 import EditQuestionDialog from './EditQuestionDialog';
 import QuestionsList from './QuestionsList';
 
@@ -66,7 +67,9 @@ const QuestionsListWrapper = ({ questions, handleEditQuestion, handleDeleteQuest
 
     return (
         <>
-            <Typography variant='h5'> Created Questions </Typography>
+            <Tooltip text={'Here you can find the created questions and their answers.'}>
+                <Typography variant="h5" > Created Questions </Typography>
+            </Tooltip>
             <QuestionsList
                 questions={questionsList}
                 handleEditQuestionClick={handleEditQuestionClick}
