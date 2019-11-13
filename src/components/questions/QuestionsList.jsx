@@ -7,6 +7,7 @@ import SnackbarContent from '@material-ui/core/SnackbarContent';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';
+import grey from '@material-ui/core/colors/grey';
 
 const QuestionsList = ({ questions, handleEditQuestionClick, handleDeleteQuestionClick }) => {
     const classes = useStyles();
@@ -68,7 +69,8 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        border: '1px solid #A9A9A9',
+        border: '1px solid',
+        borderColor: grey['400'],
         borderRadius: '3px',
         marginTop: theme.spacing(1),
         padding: theme.spacing(1),
