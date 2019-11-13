@@ -89,11 +89,14 @@ const QuestionsForm = ({ questionObject, handleCreateQuestion, handleEditQuestio
                                 component="div"
                             />
                         </div>
-                        <Checkbox
-                            checked={isDelayAdded}
-                            onChange={(event) => setIsDelayAdded(event.target.checked)}
-                            value="isDelayAdded"
-                        />
+                        <div className={classes.formRow}>
+                            <Checkbox
+                                checked={isDelayAdded}
+                                onChange={(event) => setIsDelayAdded(event.target.checked)}
+                                value="isDelayAdded"
+                            />
+                            <Typography variant="body2">Delay</Typography>
+                        </div>
                         <LoadingButton
                             isLoading={isLoading}
                             type="submit"
@@ -124,6 +127,8 @@ const useStyles = makeStyles((theme) => ({
     },
     formRow: {
         marginTop: theme.spacing(1),
+        display: 'flex',
+        alignItems: 'center',
     },
     button: {
         marginTop: theme.spacing(1),
