@@ -1,12 +1,8 @@
-import shortid from 'shortid';
 import { CREATE_QUESTION, SET_QUESTIONS } from '../actions/questions';
+import initialData from '../../initialData'
 
 const initialState = {
-    data: [{
-        id: shortid.generate(),
-        question: 'How to add questions?',
-        answer: 'Just use the form below!',
-    }],
+    data: initialData.questions,
 };
 
 const reducer = (state = initialState, action) => {
